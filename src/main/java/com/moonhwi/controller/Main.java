@@ -7,9 +7,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @ServletComponentScan
-public class MvcdemoApplication extends SpringBootServletInitializer {
+public class Main extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(MvcdemoApplication.class, args);
+        SpringApplication.run(Main.class, args);
     }
 }
