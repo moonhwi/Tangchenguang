@@ -1,4 +1,4 @@
-package com.spboot.mvcdemo;
+package com.moonhwi.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

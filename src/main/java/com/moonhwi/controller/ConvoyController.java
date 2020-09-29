@@ -1,4 +1,4 @@
-package com.spboot.mvcdemo;
+package com.moonhwi.controller;
 
 import com.mathworks.toolbox.javabuilder.MWException;
 import com.mathworks.toolbox.javabuilder.MWNumericArray;

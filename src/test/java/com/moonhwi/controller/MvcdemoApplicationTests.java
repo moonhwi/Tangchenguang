@@ -1,4 +1,4 @@
-package com.spboot.mvcdemo;
+package com.moonhwi.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
