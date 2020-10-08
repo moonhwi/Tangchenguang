@@ -6,43 +6,70 @@
         src="https://lib.baomitu.com/echarts/4.7.0/echarts.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
 <html lang="en">
+<link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
 
 <body>
 
 <form action="/convo" method="post" id="params">
-    <input type="text" name="paramA" value="" />
-    <input type="text" name="paramB" value="" />
-    <button type="button" onclick="doSubmitForm()">提交<button/>
+
+    <button type="button" onclick="doSubmitForm()">提交
+        <button/>
 </form>
 
 
-<div id="main" style="width: 600px; height: 400px;"></div>
+<div id="main" style="width: 600px; height: 400px; "></div>
 <script type="text/javascript">
-    var array=[];
+
+    var array = [];
+    var array1 = [];var array2 = [];
     var result = '';    // 先定义个值，方便下面赋值
-    var x=[];
+    var x = [];
+
     function doSubmitForm() {
-        var form = document.getElementById('params');
         $.ajax({
             async: false,    // 这个需要写上
             url: "http://localhost:8080/convo",
-            type: 'post',
-            data:[form.paramA,form.paramB],
+            type: 'get',
             success: function (callback) {
                 result = callback;   // 赋值给刚才定义的值
-                var results=result.split(",");
+                var results = result.split(",");
+                var index=0;
+                var find=false;
+                for (var i = 0; i < results.length; i++) {
+                    if (i < results.length / 3) {
+                        array.push(results[i]);
+                        x.push((0.01 * i - 2).toFixed(2));
+                        if(results[i]!=0&&find==false)
+                        {
+                            index=i;
+                            find=true;
+                        }
+                    } else if (i < results.length / 3 * 2)
+                    {
+                       break;
+                    }
+                    else {
 
-                for (var i=0;i<results.length;i++)
-                {
-                    array.push(results[i]);
-                    x.push(i);
+                    }
+
+
+
                 }
-                buildChart(x,array);
+                console.log(index);
+                for(var i=0;i<index+50;i++)
+                {
+                    array2.push(0);
+                }
+                array2.push(1);
+                console.log(x);
+                buildChart(x, array,array1,array2);
             }
         });
     }
-    var idx=0;
-    function buildChart(x,array) {
+
+    var idx = 0;
+
+    function buildChart(x, array,array1,array2) {
         var myChart = echarts.init(document.getElementById('main'));
 
         var option = {
@@ -54,25 +81,66 @@
                 data: ['卷积和']
             },
             xAxis: {
-                data: x
+                data: x,
+
             },
             yAxis: {},
+
             series: [{
+                clickable: false,
                 name: '卷积和',
                 type: 'scatter',
                 data: array,
                 color: 'blue',
-                symbolSize:3
-            }]
+                symbolSize: 3
+            }, {
+                clickable: false,
+                name: '!',
+                type: 'bar',
+                barWidth:'10000%',
+                itemStyle:{
+                    normal:{
+                        color:'#fff',
+                        barBorderColor:'#4876FF'
+                    }
+                },
+                data: array2,
+                color: 'red',
+                symbolSize: 3
+            },
+                // {
+                //     clickable: false,
+                //     name: '?',
+                //     type: 'bar',
+                //     data: [1],
+                //     barWidth:'10000%',
+                //     itemStyle:{
+                //         normal:{
+                //             color:'#fff',
+                //             barBorderColor:'#F876FF'
+                //         }
+                //     },
+                //     animation:false
+                // }
+            ]
+
         };
         myChart.setOption(option);
         refreshData(myChart);
     }
+
     function refreshData(myChart) {
-        if (idx>array.length)
+        if (idx > array.length)
             return;
         var option = myChart.getOption();
-        option.series[0].data = array.slice(0,idx);
+        option.series[0].data = array.slice(0, idx);
+        var arrayTemp=[];
+        for (var i=0;i<idx-1;i++)
+        {
+            arrayTemp.push(0);
+        }
+        arrayTemp.push(1);
+        //option.series[1].data = arrayTemp;
         myChart.setOption(option);
         idx++;
 
@@ -81,11 +149,12 @@
         })
     }
 
-    function sleep (time) {
+    function sleep(time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
 
 </script>
+<script src="https://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 </body>
 

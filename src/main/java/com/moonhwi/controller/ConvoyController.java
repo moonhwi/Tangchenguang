@@ -15,15 +15,33 @@ public class ConvoyController {
     public String Hello(){
         return "welcome";
     }
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
     @RequestMapping("/convo")
-    public @ResponseBody String convo(@RequestParam int paramA ,@RequestParam int paramB) throws MWException {
+    public @ResponseBody String convo() throws MWException {
         Class1 class1=new Class1();
         Object[] a=new Object[150];
-        a=class1.convo(1,paramA,paramB);
+        a=class1.convo(3);
         MWNumericArray mw=(MWNumericArray)a[0];
+        MWNumericArray mw1=(MWNumericArray)a[1];
+        MWNumericArray mw2=(MWNumericArray)a[2];
         float array[]=mw.getFloatData();
         StringBuffer stringBuffer=new StringBuffer();
         for (float ss:array)
+        {
+            System.out.print(ss+" ");
+            stringBuffer.append(ss);
+            stringBuffer.append(",");
+        }
+        for (float ss:mw1.getFloatData())
+        {
+            System.out.print(ss+" ");
+            stringBuffer.append(ss);
+            stringBuffer.append(",");
+        }
+        for (float ss:mw2.getFloatData())
         {
             System.out.print(ss+" ");
             stringBuffer.append(ss);
